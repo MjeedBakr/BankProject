@@ -543,14 +543,15 @@ void ShowMainMenue()
 
 void PerfromTransaction(sClient &Client, vector <sClient> &vClients, double TransactionValue, bool isDeposite)
 {
+    if (!isDeposite)
+        TransactionValue *= -1;
+
     for (sClient &c : vClients)
     {
         if (c.AccountNumber == Client.AccountNumber)
         {
-            if (isDeposite)
-                c.AccountBalance += TransactionValue;
-            else
-                c.AccountBalance -= TransactionValue;
+            c.AccountBalance += TransactionValue;
+ 
             Client.AccountBalance = c.AccountBalance;
             break;
         }
@@ -633,7 +634,7 @@ void ShowDepositScreen()
 void ShowWithdrawScreen()
 {
     cout << "\n-----------------------------------\n";
-    cout << "\Withdraw Screen";
+    cout << "\nWithdraw Screen";
     cout << "\n-----------------------------------\n";
 
     vector <sClient> vClients = LoadCleintsDataFromFile(ClientsFileName);
